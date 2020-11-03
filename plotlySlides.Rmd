@@ -1,0 +1,36 @@
+---
+title: "Multivariate normal"
+author: "Sebastián Rodríguez"
+date: "11/2/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+***
+
+```{r ref.label="code",echo=FALSE,message=FALSE,warning=FALSE}
+
+```
+
+## Plot code
+
+```{r label="code",eval=FALSE,echo=TRUE}
+library(plotly)
+library(MASS)
+
+set.seed(123456)
+
+#generate multivariate gaussian distribution
+gauss <- mvrnorm(100000, mu = c(0,0), 
+         Sigma =matrix(c(1, .5, .5, 1), 2))
+
+#estimate values from sample
+distrEst <- kde2d(gauss[,1], gauss[,2], n = 500)
+
+#generate the 3D surface plot
+plot_ly(data=data.frame(distrEst),x=distrEst$x,
+        y=distrEst$y,z=distrEst$z, type = "surface")
+```
